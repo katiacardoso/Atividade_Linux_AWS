@@ -48,20 +48,34 @@ Fazer a documentação explicando o processo de instalação do Linux.
 
   ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/2405bb39-8c81-44a5-9ae7-943388246823)
 
- - Abaixo é encontrada a sessão ** Tipo de instância** na qual é o momento de escolher o tipo de instância que foi previamente determinado, neste caso: t3.small. Basta encontrar na listagem de Tipo de instância, selecionar e seguir com o processo
+ - Abaixo é encontrada a sessão **Tipo de instância** na qual é o momento de escolher o tipo de instância que foi previamente determinado, neste caso: t3.small. Basta encontrar na listagem de Tipo de instância, selecionar e seguir com o processo
 
  - Em seguida esta presente a sessão **Par de Chaves(login)**, na qual é o momento de gerar um par de chaves para conectar com segurança à esta instância que está sendo criada. Algumas questões para atenção:
     - <details>
       <summary>Comentários pessoais sobre problemas nesta parte</summary>
-       Na atividade é solicitada uma *geração de chave pública para acesso ao ambiente*. Para fazer isto via Windows, é possível utilizar o PuttyGen e depois acessar via Putty. Porém para este acesso, utiliza-se a chave privada para autenticação, então em tese, ela só é gerada mas utilizada. Contudo, nesta documentação: https://repost.aws/pt/knowledge-center/ec2-ppk-pem-conversion comenta sobre o uso no Linux, então como em tese temos uma máquina Oracle Linux instalada, seria interessante tentar locar por ela e fazer esta geração. Mas por hora, a solução foi implementada com chave privada e acesso via Putty e quem sabe em posteriores atividades, a documentação aqui indicada auxilie.
       
-     Sobre o tipo .pem e .ppk : é recomendado que você crie a chave no formato .pem, mesmo que você irá acessar pelo Putty (depois transforma ela em privada com o PuttyGen), pois futuramente é possível utilizar este mesmo par de chaves para o teste em máquinas Linux. - verificar nome do par de chaves no console AWS
-   
-
+      -   Na atividade é solicitada uma *geração de chave pública para acesso ao ambiente*. Para fazer isto via Windows, é possível utilizar o PuttyGen e depois acessar via Putty. Porém para este acesso, utiliza-se a chave privada para autenticação, então em tese, ela só é gerada mas utilizada. Contudo, nesta documentação: https://repost.aws/pt/knowledge-center/ec2-ppk-pem-conversion comenta sobre o uso no Linux, então como em tese temos uma máquina Oracle Linux instalada, seria interessante tentar locar por ela e fazer esta geração. Mas por hora, a solução foi implementada com chave privada e acesso via Putty e quem sabe em posteriores atividades, a documentação aqui indicada auxilie.
+      
+      -   Sobre o tipo .pem e .ppk : é recomendado que você crie a chave no formato .pem, mesmo que você irá acessar pelo Putty (depois transforma ela em privada com o PuttyGen), pois futuramente é possível utilizar este mesmo par de chaves para o teste em máquinas Linux. - verificar nome do par de chaves no console AWS
       </details>
    
-    - Sendo assim, foi criado um par de chaves novos, clicando em "Criar novo par de chaves" que se encontra dentro da sessão, adicionou-se um nome, deixou o tipo RSA e manteve o formato .pem . Clique em **Criar par de chaves** e salve o arquivo gerado ( apareça na sua pasta de Downloads da máquina local possivelmente) em um local seguro. 
-    - 
+    - Foi criado um par de chaves novos, clicando em "Criar novo par de chaves" que se encontra dentro da sessão, adicionou-se um nome, deixou o tipo RSA e manteve o formato .pem . Clique em **Criar par de chaves** e salve o arquivo gerado ( apareça na sua pasta de Downloads da máquina local possivelmente) em um local seguro. 
+ 
+ - Na próxima sessão: **Configurações de rede** deve ser realiza a conexão obrigatória com uma VPC, subnet e um grupo de segurança. Então por partes:
+    - VPC: caso não tenha uma criada para realizar a associação, é necessário criar uma seguindo estes passos:
+        - Na barra de pesquisa na parte superior, pesquise pelo serviço de VPC (recomedno também que favorite ele na estrelinha pois será de grande uso no processo :)) e clique para abrir o mesmo.
+        - Clique em **Criar VPC**
+        - Na opção de **Recursos a serem criados**, mude de "Somente VPC" para "VPC e muito mais", pois assim já virá configurado automaticamente subnets, internet gateways, e assim por diante
+        - No campo abaixo, pode acionarr um nome, no meu caso foi gerado um automaticamente então segui com ele
+        - No campo de Bloco CIDR IPv4 eu deixei com /16, porém pode ser de boa prática deixar menos endereços IP's disponíveis pois nesta atividade não iremos utilizar 65.536 IP's :)
+        - No campo Bloco CIDR IPv6, deixou-se marcado nenhum, pois vamos apenas de IPv4 mesmo
+        - O restante deixei como padrão que veio, contudo se atente a criação de subnets públicas (mais detalhes no comentário abaixo) e apertei em "criar" no final da página
+        - <details>
+           <summary>Comentários pessoais sobre problemas nesta parte</summary>
+      
+            - Pois em uma das instâncias de testes criadas anteriormente, ocorreu um erro na porta 443 quando me conectei ao Putty e tentava executar qualquer comando yum. Pelas minhas pesquisas, seria necessário um NAT Gateway para funcionar, mas achei um pouco arriscado pois ele tem uma comunicação via única, ou seja, apenas acesso a internet e não permitir que a internet acesse ela. Portanto fiquei insegura e resolvi criar uma outra instância em uma subnet pública, visto que após criada não tem como mudar de subnet.
+        </details>
+       
 
 
 
