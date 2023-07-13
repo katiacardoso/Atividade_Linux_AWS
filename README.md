@@ -62,22 +62,78 @@ Fazer a documentação explicando o processo de instalação do Linux.
     - Foi criado um par de chaves novos, clicando em "Criar novo par de chaves" que se encontra dentro da sessão, adicionou-se um nome, deixou o tipo RSA e manteve o formato .pem . Clique em **Criar par de chaves** e salve o arquivo gerado ( apareça na sua pasta de Downloads da máquina local possivelmente) em um local seguro. 
  
  - Na próxima sessão: **Configurações de rede** deve ser realiza a conexão obrigatória com uma VPC, subnet e um grupo de segurança. Então por partes:
-    - VPC: caso não tenha uma criada para realizar a associação, é necessário criar uma seguindo estes passos:
-        - Na barra de pesquisa na parte superior, pesquise pelo serviço de VPC (recomedno também que favorite ele na estrelinha pois será de grande uso no processo :)) e clique para abrir o mesmo.
-        - Clique em **Criar VPC**
-        - Na opção de **Recursos a serem criados**, mude de "Somente VPC" para "VPC e muito mais", pois assim já virá configurado automaticamente subnets, internet gateways, e assim por diante
-        - No campo abaixo, pode acionarr um nome, no meu caso foi gerado um automaticamente então segui com ele
-        - No campo de Bloco CIDR IPv4 eu deixei com /16, porém pode ser de boa prática deixar menos endereços IP's disponíveis pois nesta atividade não iremos utilizar 65.536 IP's :)
-        - No campo Bloco CIDR IPv6, deixou-se marcado nenhum, pois vamos apenas de IPv4 mesmo
-        - O restante deixei como padrão que veio, contudo se atente a criação de subnets públicas (mais detalhes no comentário abaixo) e apertei em "criar" no final da página
-        - <details>
-           <summary>Comentários pessoais sobre problemas nesta parte</summary>
+      <details>
+      <summary> Caso não tenha uma VPC criada para realizar a associação, é necessário criar uma seguindo estes passos: </summary>
+     
+        
+      - Na barra de pesquisa na parte superior, pesquise pelo serviço de VPC (recomedno também que favorite ele na estrelinha pois será de grande uso no processo :)) e clique para abrir o mesmo.
+     
+      - Clique em **Criar VPC**
+
+      -  Na opção de **Recursos a serem criados**, mude de "Somente VPC" para "VPC e muito mais", pois assim já virá configurado automaticamente subnets, internet gateways, e assim por diante
+  
+      - No campo abaixo, pode acionarr um nome, no meu caso foi gerado um automaticamente então segui com ele
+     
+      - No campo de Bloco CIDR IPv4 eu deixei com /16, porém pode ser de boa prática deixar menos endereços IP's disponíveis pois nesta atividade não iremos utilizar 65.536 IP's :)
+     
+      - No campo Bloco CIDR IPv6, deixou-se marcado nenhum, pois vamos apenas de IPv4 mesmo
+     
+      - O restante deixei como padrão que veio, contudo se atente a criação de subnets públicas (mais detalhes no comentário abaixo) e apertei em "criar" no final da página
+              - <details>
+                 <summary>Comentários pessoais sobre problemas nesta parte</summary>
+                Pois em uma das instâncias de testes criadas anteriormente, ocorreu um erro na porta 443 quando me conectei ao Putty e tentava executar qualquer comando yum. Pelas minhas pesquisas, seria necessário um NAT Gateway para funcionar, mas achei um pouco arriscado pois ele tem uma comunicação via única, ou seja, apenas acesso a internet e não permitir que a internet acesse ela. Portanto fiquei insegura e resolvi criar uma outra instância em uma subnet pública, visto que após criada não tem como mudar de subnet.
+                </details>
+
+      </details> 
       
-            - Pois em uma das instâncias de testes criadas anteriormente, ocorreu um erro na porta 443 quando me conectei ao Putty e tentava executar qualquer comando yum. Pelas minhas pesquisas, seria necessário um NAT Gateway para funcionar, mas achei um pouco arriscado pois ele tem uma comunicação via única, ou seja, apenas acesso a internet e não permitir que a internet acesse ela. Portanto fiquei insegura e resolvi criar uma outra instância em uma subnet pública, visto que após criada não tem como mudar de subnet.
-        </details>
-       
+   - Com a VPC já criada, ( se você teve que criar a VPC neste mesmo momento da criação da instância, basta apertar no ícone ao lado do para carregar as novas configurações), selecione a VPC e a subnet quue será referente a esta instância. Uma atenção especial para **coloca-lá em uma subnet pública, pois nesta documentação ela está alocada em uma pública**
+   - No campo **Atribuir IP público automaticamente** foi mantido o padrão "desabilitado"
+   - No campo **Firewall(grupos de segurança)** decidi selecionar a opção de **Selecionar um grupo de segurança existente** pois assim já realizei as configurações de portas de entrada solicitadas.
+   - <details>
+      <summary> Caso não tenha um grupo de segurança criado para realizar a associação, é necessário criar um seguindo estes passos: </summary>
+     
+        
+      - Na barra de pesquisa na parte superior, pesquise pelo serviço de EC2, ou se você estiver favoritado ele desde o primeiro uso, ele estará na parte superior da tela, mais ou menos assim:
+      - adicionar imagem serviços favoritados 
+     
+      - Na aba esquerda, encontre **Grupo de segurança** e clique nele 
 
+      -  Clique em **Criar grupo de segurança** ? confirmar se é isso mesmo
+  
+      - No campo abaixo, pode acionar um nome e apertar para gerar ? Confirmar se é isso mesmo
+     
+      - Verificar exatamente a ordem, mas tem que adiconar as portas de entradas que foram solicitadas na tarefa, seguem abaixo o modo como ficou configurado:
+        ##
+        | Type         | Protocol | Port Range | Source Type | Source      |
+        |--------------|----------|------------|-------------|-------------|
+        | SSH          | TCP      | 22         | Anywhere    | 0.0.0.0/0   |
+        | Custom TCP   | TCP      | 111        | Anywhere    | 0.0.0.0/0   |
+        | Custom UDP   | UDP      | 111        | Anywhere    | 0.0.0.0/0   |
+        | Custom TCP   | TCP      | 2049       | Anywhere    | 0.0.0.0/0   |
+        | Custom UDP   | UDP      | 2049       | Anywhere    | 0.0.0.0/0   |
+        | Custom TCP   | TCP      | 80         | Anywhere    | 0.0.0.0/0   |
+        | Custom TCP   | TCP      | 443        | Anywhere    | 0.0.0.0/0   |
+        ##
+     
+      - RESERVA PARA ADICIONAR MAIS E NAO PERDER A FORMATAÇÃO
+     
+      - RESERVA PARA ADICIONAR MAIS E NAO PERDER A FORMATAÇÃO
 
+      </details> 
+   - Caso já tenha um grupo de segurança já existente anteriormente ao criado no passo anterior (lembra-se de adicionar as portas das **Regras de Entradas** , ou acabou de cria-lo anteriormente (lembrando de recarregar na setinha ao lado para subir as novas configurações) este é o momento de seleciona-lo para anexar o mesmo nesta instância que está sendo criada e seguir para o próximo passo.
+  
+   - Na próxima sessão **Configurar armazenamento** foi realizada basicamente a troca de "8gp2" para "16gp2", volume este que foi especificado na tarefa
+   - E assim, chegou-se ao final da criação da Instância EC2, para fins de confirmação, segue um breve resumo das  configurações:
+     
+     ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/00c8ba32-54af-4118-bf7e-a9c6031d2c97)
+
+   - Clique em Executar Instância e é após um pequeno momento de espera, é esperada uma mensagem de êxito na criação.
+  
+   - Para verificar se ela realmente está funcional, entre no serviço EC2, caso esteja fora dele, procure na barra lateral esquerda por "Instâncias" e confira se o Status Check (?) está 2/2 e ela está no estado "Executando"
+     > 
+      > **Note**: Quando a instância não estiver sendo utilizada, não esqueça de alterar o status dela para *Interrompida* para não gerar gastos extras 
+          
+----
 
 
 
