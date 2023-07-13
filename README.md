@@ -40,7 +40,7 @@ Tabela de conteúdos
 =================
 <!--ts-->
    * [Criação da Instância EC2](#Criação-da-Instância-EC2)
-   * [Tabela de Conteudo](#tabela-de-conteudo)
+   * [Configurações da Instância EC2 para conexão](#configuração_aws)
    * [Instalação](#instalacao)
    * [Como usar](#como-usar)
       * [Pre Requisitos](#pre-requisitos)
@@ -117,10 +117,12 @@ Tabela de conteúdos
       - Na aba esquerda, encontre **Grupo de segurança** e clique nele 
 
       -  Clique em **Criar grupo de segurança** ? confirmar se é isso mesmo
+    
+      -  No campo de VPC, encontrar e anexar a VPC criada anteiormente
   
       - No campo abaixo, pode acionar um nome e apertar para gerar ? Confirmar se é isso mesmo
      
-      - Verificar exatamente a ordem, mas tem que adiconar as portas de entradas que foram solicitadas na tarefa, seguem abaixo o modo como ficou configurado:
+      - Após criado, selecione este grupo de seurança e clique em **Ações**, no canto superior direito, e em seguida em **Editar regras de entrada**. Segue abaixo o modo como ficou configurado:
         ##
         | Type         | Protocol | Port Range | Source Type | Source      |
         |--------------|----------|------------|-------------|-------------|
@@ -150,8 +152,25 @@ Tabela de conteúdos
    - Para verificar se ela realmente está funcional, entre no serviço EC2, caso esteja fora dele, procure na barra lateral esquerda por "Instâncias" e confira se o Status Check (?) está 2/2 e ela está no estado "Executando"
      > 
       > **Note**: Quando a instância não estiver sendo utilizada, não esqueça de alterar o status dela para *Interrompida* para não gerar gastos extras 
+
+  - Então, após o processo de criação, iremos configurar um IP elástico para permitir uma comunicação peristente com os recursos da AWS e facilitando a comunicação externa. Para a criação de um, deve-se estar no serviço EC2. Procure e clique em **IPs elásticos** na guia lateral esquerda. Em seguida, clique em **Alocar endereço IP Elástico** e em seguida em "Alocar".
+  - Após alocado ele deve ser associado a uma instância, caso contrário gerará custos. Portanto, clique no IP elástico alocado anteriormente, clique em **Ações** e em seguida em **Associar endereço IP Elástico**. Na nova janela, em **Resource Type** selecione **Instance**, em **Instance** selecione a instância criada anteriormente e clique no campo **Private IP Address** deve aparecer um endereço de IP lá para selecionar, ele será (ou deveria ser) o mesmo endereço privado que poderá ser encontrado nos detalhes da instância (na página da instância, não ali). Feito isso, basta clicar em **Associar** no final da página
+
           
 ----
+
+<div id='configuração_aws'/> 
+
+# Configurações da Instância EC2 para conexão
+
+# Geração de chave pública para acesso ao ambiente
+
+# Parte do Linux
+
+- mas ainda tem que configurar EFS no console da aws 
+- passando para o putty, executa comandos:
+
+
 
 
 
