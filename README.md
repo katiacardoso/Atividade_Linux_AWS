@@ -45,17 +45,17 @@ Fazer a documentação explicando o processo de instalação do Linux.
 
 - Logue na sua conta da AWS e selecione o serviço de EC2 no console ( caso não esteja visível logo de cara, é possível pesquisar na barra de pesquisa logo acima e DICA: já favorita ele na estrelinha ao lado do nome ao pesquisar, pois ele será bastante utilizado nesta documentação).
 
-- Na nova janela aberta, clique em **Executar Instâncias** e os jogos irão começar
+- Na nova janela aberta, clique em **Executar Instâncias**
   
-- Na sessão de **Nomes e tags** é importante adicionar as Tags que foram instruídas para criação da instância ( porque caso contrário, dá erro de criação :)). Portanto é recomendado adicionar as chaves: Name, Project e CostCenter, e seus valores respectivos. Outro ponto importante que não deve ser esquecido é o acréscimo do **Tipo de Recurso**, que se encontra ao lado do direito do valor, o tipo: *Volume*, ficando mais ou menos assim:
+- Na sessão de **Nomes e tags** é importante adicionar as Tags que foram instruídas para criação da instância ( porque caso contrário, dá erro de criação :)). Portanto é recomendado adicionar as chaves: Name, Project e CostCenter, e seus valores respectivos. Outro ponto importante que não deve ser esquecido é o acréscimo do tipo: *Volume* em **Tipo de Recurso**, que se encontra ao lado do direito do valor, ficando mais ou menos assim:
   
   ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/cdbc1d55-1b8c-457e-abbc-9d83d4aedfd1)
 
-- Na sessão **Imagens de aplicaçao e de sistema Operacional (Imagem de máquina da Amazon)** é o momento de escolher a imagem que foi determinada, neste caso: Amazon Linux 2. Ao encontra-lá na listagem de Imagem de máquina da Amazon (AMI), basta selecionar e continuar o processo
+- Na sessão **Imagens de aplicação e de sistema Operacional (Imagem de máquina da Amazon)** é o momento de escolher a imagem que foi determinada, neste caso: Amazon Linux 2. Ao encontra-lá na listagem de **Imagem de máquina da Amazon (AMI)**, basta selecionar e continuar o processo
 
   ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/2405bb39-8c81-44a5-9ae7-943388246823)
 
- - Abaixo é encontrada a sessão **Tipo de instância** na qual é o momento de escolher o tipo de instância que foi previamente determinado, neste caso: t3.small. Basta encontrar na listagem de Tipo de instância, selecionar e seguir com o processo
+ - Abaixo é encontrada a sessão **Tipo de instância** na qual é o momento de escolher o tipo de instância que foi previamente determinado, neste caso: t3.small. Basta encontrar na listagem de **Tipo de instância**, selecionar e seguir com o processo
    
 ### Criação do par de chaves
 
@@ -65,96 +65,104 @@ Em seguida esta presente a sessão **Par de Chaves(login)**, na qual é o moment
       
       -   Na atividade é solicitada uma *geração de chave pública para acesso ao ambiente*. Para fazer isto via Windows, é possível utilizar o PuttyGen e depois acessar via Putty. Contudo, nesta documentação: https://repost.aws/pt/knowledge-center/ec2-ppk-pem-conversion comenta sobre o uso no Linux, então como em tese temos uma máquina Oracle Linux instalada, seria interessante tentar logar por ela e fazer esta geração. Mas por hora, a solução foi implementada com acesso via Putty e quem sabe em posteriores atividades, a documentação aqui indicada auxilie.
       
-      -   Sobre o tipo .pem e .ppk : é recomendado que você crie a chave no formato .pem, mesmo que você irá acessar pelo Putty (depois transforma ela em privada com o PuttyGen), pois futuramente é possível utilizar este mesmo par de chaves para o teste em máquinas Linux. - verificar nome do par de chaves no console AWS
+      -   Sobre o tipo .pem e .ppk : é recomendado que você crie a chave no formato .pem, mesmo que você irá acessar pelo Putty (depois transforma ela em formtato .ppk com o PuttyGen), pois futuramente é possível utilizar este mesmo par de chaves para o teste em máquinas Linux, no qual é utilizado o formato .pem
       </details>
    
-Foi criado um par de chaves novo, clicando em "Criar novo par de chaves" que se encontra dentro da sessão, adicionou-se um nome, deixou o tipo RSA e manteve o formato .pem . Clique em **Criar par de chaves** e salve o arquivo gerado ( apareça na sua pasta de Downloads da máquina local possivelmente) em um local seguro.
+Foi criado um par de chaves novo, clicando em **Criar novo par de chaves** que se encontra dentro da sessão, adicionou-se um nome, deixou o manteve o tipo RSA e também manteve o formato .pem. Clique em **Criar par de chaves** e salve o arquivo gerado ( aparece na sua pasta de Downloads da máquina local possivelmente) em um local seguro.
       
 ### Configuração de Rede
 
-Na próxima sessão: **Configurações de rede** deve ser realiza a conexão obrigatória com uma VPC, subnet e um grupo de segurança. Então por partes:
-  - <details>
+Na próxima sessão: **Configurações de rede** deve ser realizada a conexão obrigatória com uma VPC, subnet e um grupo de segurança. Então por partes:
+
+ <details>
       <summary> Caso não tenha uma VPC criada para realizar a associação, é necessário criar uma seguindo estes passos: </summary>
      
         
-      - Na barra de pesquisa na parte superior, pesquise pelo serviço de VPC (recomendo também que favorite ele na estrelinha pois será de grande uso no processo :)) e clique para abrir o mesmo.
+  - Na barra de pesquisa na parte superior, pesquise pelo serviço de VPC (recomendo também que favorite ele na estrelinha pois será de grande uso no processo :)) e clique para abrir o mesmo.
         
-     #### Criação de VPC ( Virtual Private Cloud)
+    #### Criação de VPC ( Virtual Private Cloud)
    
       - Clique em **Criar VPC**
 
-      -  Na opção de **Recursos a serem criados**, mude de "Somente VPC" para "VPC e muito mais", pois assim já virá configurado automaticamente subnets, internet gateways, e assim por diante
+      -  Na opção de **Recursos a serem criados**, mude de *Somente VPC* para *VPC* e muito mais", pois assim já virá configurado automaticamente subnets, internet gateways, e afins
   
-      - No campo abaixo, pode adicionar um nome, no meu caso foi gerado um automaticamente então segui com ele
+      - No campo abaixo, pode adicionar um nome, no meu caso foi gerado um automaticamente, pode alterar se preferir
      
-      - No campo de Bloco CIDR IPv4 eu deixei com /16, porém pode ser de boa prática deixar menos endereços IP's disponíveis pois nesta atividade não iremos utilizar 65.536 IP's :)
+      - No campo de Bloco CIDR IPv4 eu deixei com /16
+          >**Note** Porém pode ser de boa prática deixar menos endereços IP's disponíveis pois nesta atividade não iremos utilizar 65.536 IP's :)
      
       - No campo Bloco CIDR IPv6, deixou-se marcado nenhum, pois vamos apenas de IPv4 mesmo
      
       - O restante deixei como padrão que veio, contudo se atente a criação de subnets públicas (mais detalhes no comentário abaixo) e apertei em "criar" no final da página
               - <details>
                  <summary>Comentários pessoais sobre problemas nesta parte</summary>
-                Pois em uma das instâncias de testes criadas anteriormente, ocorreu um erro na porta 443 quando me conectei ao Putty e tentava executar qualquer comando yum. Pelas minhas pesquisas, seria necessário um NAT Gateway para funcionar, mas achei um pouco arriscado pois ele tem uma comunicação via única, ou seja, apenas acesso a internet e não permitir que a internet acesse ela. Portanto foi resolvido criar uma outra instância em uma subnet pública, visto que após criada não tem como mudar de subnet.
+                Em uma das instâncias de testes criadas anteriormente, ocorreu um erro na porta 443 quando me conectei ao Putty e tentava executar qualquer comando yum. Pelas minhas pesquisas, seria necessário um NAT Gateway para funcionar, mas achei um pouco arriscado pois ele tem uma comunicação via única, ou seja, apenas acesso a internet e não permitir que a internet acesse ela. Portanto foi decidido criar uma outra instância em uma subnet pública, visto que após criada não tem como mudar de subnet.
                 </details>
 
-      </details> 
+</details> 
       
-   - Com a VPC já criada, ( se você teve que criar a VPC neste mesmo momento da criação da instância, basta apertar no ícone ao lado do para carregar as novas configurações), selecione a VPC e a subnet quue será referente a esta instância.
+   - Com a VPC já criada, (se você teve que criar a VPC neste mesmo momento da criação da instância, basta apertar no ícone ao lado do para carregar as novas configurações), selecione a VPC e a subnet quue será referente a esta instância.
      
-     >**Note** Uma atenção especial para **coloca-lá em uma subnet pública, pois nesta documentação ela está alocada em uma pública**
+     >**Note** Uma atenção especial para coloca-lá em uma subnet pública, pois nesta documentação ela está alocada em uma pública
 
    - No campo **Atribuir IP público automaticamente** foi mantido o padrão "desabilitado"
      
      #### Configuração do grupo de segurança
      
-   - No campo **Firewall(grupos de segurança)** decidi selecionar a opção de **Selecionar um grupo de segurança existente** pois assim já realizei as configurações de portas de entrada solicitadas.
+   - No campo **Firewall(grupos de segurança)** foi decidido selecionar a opção de **Selecionar um grupo de segurança existente** pois assim já é possível realizar as configurações de portas de entrada solicitadas.
      - <details>
         <summary> Caso não tenha um grupo de segurança criado para realizar a associação, é necessário criar um seguindo estes passos: </summary>
        
           
-        - Na barra de pesquisa na parte superior, pesquise pelo serviço de EC2, ou se você estiver favoritado ele desde o primeiro uso, ele estará na parte superior da tela, mais ou menos assim:
-        - adicionar imagem serviços favoritados 
+        - Na barra de pesquisa na parte superior, pesquise pelo serviço de **EC2**, ou se você estiver favoritado ele desde o primeiro uso, ele estará na parte superior da tela, mais ou menos assim:
+          
+          ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/b3ba0015-c09d-445d-9f78-fc922d678d28)
+
        
-        - Na aba esquerda, encontre **Grupo de segurança** e clique nele 
+        - Na aba esquerda, encontre **Security Group** e clique nele 
   
-        -  Clique em **Criar grupo de segurança** ? confirmar se é isso mesmo
+        - Clique em **Criar grupo de segurança** 
       
-        -  No campo de VPC, encontrar e anexar a VPC criada anteiormente
+        - No campo de **VPC**, encontrar e anexar a VPC criada anteiormente
     
-        - No campo abaixo, pode acionar um nome e apertar para gerar ? Confirmar se é isso mesmo
+        - No campo abaixo, adionar um nome  para o grupo
        
-        - Após criado, selecione este grupo de seurança e clique em **Ações**, no canto superior direito, e em seguida em **Editar regras de entrada**. Segue abaixo o modo como ficou configurado:
+        - Em regras de entrada, clique em **Adicionar regra** e adicione estas portas abaixo especificadas na atividade
+          
           ##
-          | Type         | Protocol | Port Range | Source Type | Source      |
+          | Tipo        | Protocolo | Intervalo de Portas | Origem | Descrição      |
           |--------------|----------|------------|-------------|-------------|
-          | SSH          | TCP      | 22         | Anywhere    | 0.0.0.0/0   |
-          | Custom TCP   | TCP      | 111        | Anywhere    | 0.0.0.0/0   |
-          | Custom UDP   | UDP      | 111        | Anywhere    | 0.0.0.0/0   |
-          | Custom TCP   | TCP      | 2049       | Anywhere    | 0.0.0.0/0   |
-          | Custom UDP   | UDP      | 2049       | Anywhere    | 0.0.0.0/0   |
-          | Custom TCP   | TCP      | 80         | Anywhere    | 0.0.0.0/0   |
-          | Custom TCP   | TCP      | 443        | Anywhere    | 0.0.0.0/0   |
+          | SSH          | TCP      | 22         | Qualquer local-IPv4    | 0.0.0.0/0   |
+          | TCP personalizado  | TCP      | 111        | Qualquer local-IPv4   | 0.0.0.0/0   |
+          | UDP personalizado  | UDP      | 111        | Qualquer local-IPv4   | 0.0.0.0/0   |
+          | TCP personalizado  | TCP      | 2049       | Qualquer local-IPv4   | 0.0.0.0/0   |
+          | UDP personalizado  | UDP      | 2049       | Qualquer local-IPv4   | 0.0.0.0/0   |
+          | TCP personalizado  | TCP      | 80         | Qualquer local-IPv4   | 0.0.0.0/0   |
+          | TCP personalizado  | TCP      | 443        | Qualquer local-IPv4   | 0.0.0.0/0   |
           ##
        
   
         </details> 
-   - Caso já tenha um grupo de segurança já existente anteriormente ao criado no passo anterior (lembra-se de adicionar as portas das **Regras de Entradas** , ou acabou de cria-lo anteriormente (lembrando de recarregar na setinha ao lado para subir as novas configurações) este é o momento de seleciona-lo para anexar o mesmo nesta instância que está sendo criada e seguir para o próximo passo.
+   - Caso já tenha um grupo de segurança já existente anteriormente ao criado no passo anterior (lembrar-se de adicionar as portas das **Regras de Entradas** , ou acabou de cria-lo anteriormente (lembrando de recarregar na setinha ao lado para subir as novas configurações) este é o momento de selecioná-lo para anexar o mesmo nesta instância que está sendo criada e seguir para o próximo passo.
   
    - Na próxima sessão **Configurar armazenamento** foi realizada basicamente a troca de "8gp2" para "16gp2", volume este que foi especificado na tarefa
+
    - E assim, chegou-se ao final da criação da Instância EC2, para fins de confirmação, segue um breve resumo das  configurações:
      
      ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/00c8ba32-54af-4118-bf7e-a9c6031d2c97)
 
    - Clique em **Executar Instância** e é após um pequeno momento de espera, é esperada uma mensagem de êxito na criação.
   
-   - Para verificar se ela realmente está funcional, entre no serviço EC2, caso esteja fora dele, procure na barra lateral esquerda por "Instâncias" e confira se o Status Check (?) está 2/2 e ela está no estado "Executando"
-     > 
+   - Para verificar se ela realmente está funcional, entre no serviço EC2, caso esteja fora dele, procure na barra lateral esquerda por "Instâncias" e confira se o Verificação de status está 2/2 e ela está no estado "Executando"
+     
+     ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/62dc7d7b-8cf1-4eec-b6b9-d9598665ec41)
+
       > **Warning**: Quando a instância não estiver sendo utilizada, não esqueça de alterar o status dela para *Interrompida* para não gerar gastos extras 
 
 ## Configuração do IP Elástico
-  - Então, após o processo de criação, iremos configurar um IP elástico para permitir uma comunicação peristente com os recursos da AWS e facilitando a comunicação externa. Para a criação de um, deve-se estar no serviço EC2. Procure e clique em **IPs elásticos** na guia lateral esquerda. Em seguida, clique em **Alocar endereço IP Elástico** e em seguida em **Alocar**.
-  - Após alocado ele deve ser associado a uma instância, caso contrário gerará custos. Portanto, clique no IP elástico alocado anteriormente, clique em **Ações** e em seguida em **Associar endereço IP Elástico**. Na nova janela, em **Resource Type** selecione **Instance**, em **Instance** selecione a instância criada anteriormente e clique no campo **Private IP Address** deve aparecer um endereço de IP lá para selecionar, ele será (ou deveria ser) o mesmo endereço privado que poderá ser encontrado nos detalhes da instância (na página da instância, não ali). Feito isso, basta clicar em **Associar** no final da página
 
+  - Após o processo de criação, iremos configurar um IP elástico para permitir uma comunicação peristente com os recursos da AWS e facilitando a comunicação externa. Para a criação de um, *deve-se estar no serviço EC2*. Procure e clique em **IPs elásticos** na guia lateral esquerda. Em seguida, clique em **Alocar endereço IP Elástico** e em seguida em **Alocar**.
+  - Após alocado ele deve ser associado a uma instância, caso contrário gerará custos. Portanto, clique no IP elástico alocado anteriormente, clique em **Ações** e em seguida em **Associar endereço IP Elástico**. Na nova janela, em **Resource Type** selecione **Instance**, em **Instance** selecione a instância criada anteriormente e clique no campo **Private IP Address** deve aparecer um endereço de IP lá para selecionar, ele será (ou deveria ser) o mesmo endereço privado que poderá ser encontrado nos detalhes da instância. Feito isso, basta clicar em **Associar** no final da página
 
 # Acesso SSH à instância 
 
@@ -185,8 +193,6 @@ Na próxima sessão: **Configurações de rede** deve ser realiza a conexão obr
 - Após estes passos, é esperado que a conexão tenha sido sucedida e encontre uma tela como essa:
 
     ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/39521efc-014e-433a-94a6-87f236c0f14b)
-
-
 
 
 # Configurações do Requisitos Linux
@@ -242,7 +248,7 @@ Para configurarmos um NFS (Network File System), iremos antes configurar um EFS 
          >**Warning** Importante lembrar que cada instância tem um endereço diferente, então copie o endereço referente a sua instância
     - */nfs* → é o diretório de destino onde o sistema EFS será montado
  
-### Criaçao do arquivo com nome dentro do diretório NFS
+### Criação do arquivo com nome dentro do diretório NFS
 
 Para esta criação, utilize o comando abaixo:
 
@@ -291,7 +297,7 @@ Para criação do arquivo de Script em formato .sh:
 
     sudo nano check_status.sh
 
-Escreva o código abaixo dentro deste arquivo:
+Escreva o script abaixo dentro deste arquivo:
 
      #!/bin/bash
     
@@ -308,7 +314,7 @@ Escreva o código abaixo dentro deste arquivo:
           echo "$DATE- $SERVICE - $STATUS - $MESSAGE" >> /nfs/katia/status_apache/log_offine.txt
     fi
 
-Para sair deste arquivo, basta apetar CTRL + X, em seguida Y ( de Yes) e após isto dê um Enter
+Para sair deste arquivo, basta apertar *CTRL + X*, em seguida *Y* ( de Yes) e após isto dê um *Enter*
 
 É necessário permitir a execução deste arquivo de Script com o comando: 
 
@@ -323,9 +329,11 @@ Execute os comandos abaixo para verificar os arquivos de saída respectivo que d
     
         cat log_offline.txt
 
+
  - Para verificar o estado Online:
     
         cat log_online.txt
+   
 
 ### Configuração da execução automatizada
 
@@ -341,5 +349,9 @@ Para sair do arquivo aperte a tecla "Esc", em seguida digite **:wq** e aperte a 
 
 É esperado que após estes passos seja possível realizar uma execução automatizada do script criado
 
-Para verificação se a automação ocorreu bem, aguarde 5 minutos e realize novamente o comando de cat para os arquivos.
+Para verificação se a automação ocorreu bem, aguarde 5 minutos e realize novamente o comando de cat para os arquivos, como nas imagens abaixo
+
+ ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/ef230676-4f52-422c-bd8e-becbd8b0327b)
+
+ ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/449d3af8-e6e0-47eb-aa36-133191ae4dea)
 
