@@ -300,18 +300,23 @@ Para criação do arquivo de Script em formato .sh:
 Escreva o script abaixo dentro deste arquivo:
 
      #!/bin/bash
-    
+     
+    # exportar horário
+    export TZ=America/Sao_Paulo
+
+    #declaração de variáveis                                        
     DATE=$(date '+%d/%m/%Y %H:%M:%S')
     SERVICE="httpd"
-    
+
+    #laço para verificação
     if systemctl is-active --quiet httpd; then
-   		STATUS="Online"
-    		MESSAGE="O Apache está rodando :)"
-          echo "$DATE- $SERVICE - $STATUS - $MESSAGE" >> /nfs/katia/status_apache/log_online.txt
+   		  STATUS="Online"
+    	  MESSAGE="O Apache está rodando :)"
+        echo "$DATE- $SERVICE - $STATUS - $MESSAGE" >> /nfs/katia/status_apache/log_online.txt
     else
     		STATUS="Offline"
-   		MESSAGE="O Apache está offline :/."
-          echo "$DATE- $SERVICE - $STATUS - $MESSAGE" >> /nfs/katia/status_apache/log_offine.txt
+   		  MESSAGE="O Apache está offline :/."
+        echo "$DATE- $SERVICE - $STATUS - $MESSAGE" >> /nfs/katia/status_apache/log_offine.txt
     fi
 
 Para sair deste arquivo, basta apertar *CTRL + X*, em seguida *Y* ( de Yes) e após isto dê um *Enter*
@@ -355,3 +360,10 @@ Para verificação se a automação ocorreu bem, aguarde 5 minutos e realize nov
 
  ![image](https://github.com/katiacardoso/Atividade_Linux_AWS/assets/91233884/449d3af8-e6e0-47eb-aa36-133191ae4dea)
 
+
+E assim, chegou-se ao final de todas as configurações solicitadas. Se não deseja implementar mais testes ou implementações, é recomendável desligar a instância, interrompendo o status dela no console da AWS, pois caso contrário, pode gerar custos se manter ela ligada e sem utilização. E sobre esta questão de desligar a máquina, um detalhe bem importante é que quando a máquina for reiniciada, tem que rodar o comando abaixo para montagem do efs novamente, 
+
+    sudo mount -t efs fs-0ef31a5a2cd4d79b2.efs.us-east-1.amazonaws.com /nfs
+
+    
+Uma sugestão de implementação futura, é adicionar este comando para ser rodado logo quando a máquina for reiniciada de forma automatizada, seja no user-data ou em algum arquivo de configuração dentro do sistema Linux !
