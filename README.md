@@ -15,9 +15,9 @@ Neste repositório, encontra-se trabalhos e anotações das atividades referente
 
 ## Navegando pelas Atividades
 
-[Atividade 1: AWS e Linux](Atividade_AWS_Linux/READ.md)
+[Atividade 1: AWS e Linux](Atividade_AWS_Linux/README.md)
 
-[Atividade 2: AWS e Docker](Atividade_AWS_Docker/READ.md)
+[Atividade 2: AWS e Docker](Atividade_AWS_Docker/README.md)
 
   
 
