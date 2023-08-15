@@ -4,7 +4,7 @@
 
 # Atividade AWS e Linux
 
-### *Atividade realizada por: Katia Lorena Cardoso Sena*
+### *Atividade realizada por: Katia Cardoso*
 ---
 
   
