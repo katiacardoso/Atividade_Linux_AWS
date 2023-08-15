@@ -1,8 +1,5 @@
 # Atividade_Linux_AWS
 
-## Estágio Compass.UOL - Trilha Cloud & DevSecOps 
-
-### Katia Lorena Cardoso Sena
 ---
 
   
