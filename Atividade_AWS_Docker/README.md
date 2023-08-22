@@ -50,6 +50,18 @@ versionamento;
 
 # Criação do grupo de segurança 
 
+Antes da criação de uma nova instância, o grupo de segurança criado para a atividade anterior foi utilizado novamente nesta atividade como segue na imagem abaixo, com a única adição da regra de entrada *inbound rules* dos dados referente ao banco de dados MySQL
+
+
+  | Type         | Protocol | Port Range | Source Type | Source      | Description   |
+  |--------------|----------|------------|-------------|-------------|---------------|
+  | MYSQL/Aurora | TCP      | 3306       | Anywhere    | 0.0.0.0/0   | MySQL         |
+
+
+![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/3c6a4aab-9f29-4cea-9023-1c881ddc9daa)
+
+Caso ainda não tenha criado o seu grupo de segurança, recomendo seguir o repositório "AWS_LinuX" para a parte da documentação anterior que tratou com mais detalhes este aspecto de criação, ou então a leitura da documentação da própria AWS: https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/working-with-security-groups.html
+
 # Script no user data
 
 ```
