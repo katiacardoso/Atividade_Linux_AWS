@@ -62,6 +62,26 @@ Antes da criação de uma nova instância, o grupo de segurança criado para a a
 
 Caso ainda não tenha criado o seu grupo de segurança, recomendo seguir o repositório "AWS_LinuX" para a parte da documentação anterior que tratou com mais detalhes este aspecto de criação, ou então a leitura da documentação da própria AWS: https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/working-with-security-groups.html
 
+
+# Criação da instância 
+
+
+- criar em Launch Instance
+- nomes e tags
+- lembrar de add tipo valores e volume
+-  a AMI escolhida foi Amazon Linux 2023
+-  o Instace type :  t2.micro
+-  foi criada uma key pair cno formado .pem
+-  na sessão de Network setting foi marcada para seleção a vpc já criada para atividade passada e uma subnet pública. Adiciona o grupo de segurança que foi adicionado recentemente a nova regra para o acesso do banco de dados 
+
+![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/c7227ab8-72f8-492c-9406-533766d58e9b)
+
+- manteve o armazenamento sugerido
+
+![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/9eda3186-50a6-407d-a39b-b703ee306b20)
+
+- Adicionou o script abaixo na sessão de *Advanced details* (bem no final, pode rolar bastante) na parte de *user data)
+
 # Script no user data
 
 ```
@@ -112,5 +132,55 @@ sudo chmod +rwx /mnt/efs/
 
 </details>
 
+
+- gerando um resumo da criação desta forma:
+
+![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/818c8d2b-4a8d-4558-a7a7-463bd57dae60)
+
+- Siga para criação da isntancia apertando em *Launch instance*
+
 # RDS
+
+https://aws.amazon.com/pt/tutorials/deploy-wordpress-with-amazon-rds/module-one/
+
+- busca o serviço na barra
+- chosse a database creation method: Standard create
+- ![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/d88a1ce4-c797-4449-823933371552a944)
+- Engine type : MySQL
+- ![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/14691710-e99b-4de7-8a9d-6659f637fd2f)
+- Template: Free tier
+- ![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/166783a3-45c1-4711-90ba-6338d56f73c7)
+- Em Setting: mantece o indentifier e master username e foi adicionada uma master password (é bom salvar em algum local pois será necessario para acessar depois )
+- ![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/cbf9013b-ec4e-4d59-8781-dc1623a32e21)
+- Em connectivity identificou a VPC automaticamente, mas é bom atentar a isto ; Selecione "Yes" para Public Access e selecione o seu security group criado e ajustado anteriormente em *Existing VPC security groups*
+-![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/6dc10b06-3269-40ac-bc0b-13b90bd916ea)
+- Desça até *Additional configuration* e especique um nome para o *Initial database name* pois ele será importante para fazer a conexão no futuro
+
+- após a criação percebi que poderia ter colocado em subnets iguais, mas veremos cenas do proximo capitulo 
+
+seguindo este tutorial: 
+https://aws.amazon.com/pt/tutorials/deploy-wordpress-with-amazon-rds/module-two/
+
+- o que difere até agora é a questão da liberação do IP para todos e nesta documentação esta especificada para apenas o My IP
+
+
+https://aws.amazon.com/pt/tutorials/deploy-wordpress-with-amazon-rds/module-three/
+
+- na parte de permissão de acesso foi necessário apagar a regra do banco e adicionar novamente, pois na hora de alterar a origem para o meu grupo de segurança, deu a mensagem de erro "You may not specify a referenced group id for an existing IPv4 CIDR rule."
+- fiz acesso via SSH via putty, salvando uma chave privada via putty gen para gerar na extensão .ppk e loguei com user : ec2-user . dá de seguir este tutorial também https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html
+- seguindo na parte de criar um usuário, ao colocar o comando sudo yum install -y mysql deu erro Error: Unable to find a match: mysql. Foi seguido este tutorial https://muleif.medium.com/how-to-install-mysql-on-amazon-linux-2023-5d39afa5bf11 até antes da parte dar start no mysql e então retornei ao comando sudo yum install -y mysql e deu certo e sendo assim, retorno ao tutorial da AWS
+- export MYSQL_HOST=<your-endpoint>, neste comando ao colocar no terminal com seu endpoint, retire as chaves
+- mysql --user=<user> --password=<password> wordpress e foi o nome wordpress mesmo (mas não verifica da onde veio ) e apos este comando veio esta mensagem
+- ![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/435291b3-ac11-476d-a097-673ad295b773)
+- seguindo com a parte de criação do usuário
+- 
+
+https://aws.amazon.com/pt/tutorials/deploy-wordpress-with-amazon-rds/module-four/
+
+- ao inves do comando sudo service httpd start coloquei o sudo systemctl start httpd, pois o primeiro deu a seguinte mensagem Redirecting to /bin/systemctl start httpd.service
+- verifiquei o status do apache com sudo systemctl status httpd e deu active
+- nesta parte Você pode salvar e sair do nano digitando CTRL+O seguido de enter e depois de CTRL+X.
+- deu um erro quando fui baixar a parte dos extras, possivlemtne por ser a versão 2023, contudo encontrei este tutorial e segui até o comando echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php e deu permission denied. Mas possivlemnte se mudasse para a imagem do amazon 2 seria mais tranquilo. Tão perto e tão longe.....
+
+
 
