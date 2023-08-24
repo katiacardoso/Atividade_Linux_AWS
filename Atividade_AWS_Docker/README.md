@@ -47,11 +47,13 @@ rodando na porta 80 ou 8080;
 versionamento;
 - Criar documentação
 
-![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/c41a1b64-70ec-47c9-8f81-d5f4baa82d4e)
+<div align="center">
+  <image src = "https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/c41a1b64-70ec-47c9-8f81-d5f4baa82d4e)">
+</div>
 
 ## Descrição da minha tentativa com base na atividade proposta
 
-Uma expressão pode resumir um pouco do que aconteceu para a não execução da atividade como o esperado "Entender para atender". Por questões pessoais e algumas demandas da faculdade e outros projetos que vieram neste mês tive que priorizar algumas questões e entender o que me fazia mais sentido para mim. E analisando bem percebi que estava bem bloqueada na parte de Docker/container na prática e a expressão "Entender para atender" veio bem a calhar pois se eu não estava entendendo direito o que era para ser feito como poderia entregar a demanda de uma forma eficiente. Então após algumas pesquisas e pensamentos comigo mesma decidi que para não passar em branco, tentar realizar o deploy do Wordpress sem a parte dos containers ( porque tinham vários tutoriais e parecia um "hello world" do RDS. Contudo, algumas questões pessoais relacionadas a foco e minha necessidade de priorizar outras demandas me impediu de finalizar totalmente, mas o pouco que fiz consegui levar como aprendizado. E no momento que eu estou isso já foi bem importante e pretendo me ajustar melhor nas próximas sprints de atividades. Portanto, segue abaixo a minha documentação de um deploy Wordpress com Amazon RDS
+Uma expressão pode resumir um pouco do que aconteceu para a não execução da atividade como o esperado "Entender para atender". Por questões pessoais e algumas demandas da faculdade e outros projetos que vieram neste mês tive que priorizar algumas questões e entender o que me fazia mais sentido para mim. E analisando bem percebi que estava bem bloqueada na parte de Docker/container na prática e a expressão "Entender para atender" veio bem a calhar pois se eu não estava entendendo direito o que era para ser feito como poderia entregar/atender a demanda de uma forma eficiente. Então após algumas pesquisas e pensamentos comigo mesma decidi que para não passar em branco, tentar realizar o deploy do Wordpress sem a parte dos containers ( porque tinham vários tutoriais e parecia um "hello world" do RDS). Contudo, algumas questões pessoais relacionadas a foco e minha necessidade de priorizar outras demandas me impediu de finalizar totalmente, mas o pouco que fiz consegui levar como grande aprendizado. E no momento que eu estou isso já foi bem importante e pretendo me ajustar melhor nas próximas sprints de atividades. Portanto, segue abaixo a minha documentação de uma tentiva de deploy Wordpress com Amazon RDS.
 
 
 ### Criação do grupo de segurança 
@@ -63,10 +65,11 @@ Antes da criação de uma nova instância, o grupo de segurança criado para a a
   |--------------|----------|------------|-------------|-------------|---------------|
   | MYSQL/Aurora | TCP      | 3306       | Anywhere    | 0.0.0.0/0   | MySQL         |
 
+<div align="center">
+<img src= "https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/3c6a4aab-9f29-4cea-9023-1c881ddc9daa)">
+</div>
 
-![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/3c6a4aab-9f29-4cea-9023-1c881ddc9daa)
-
-Caso ainda não tenha criado o seu grupo de segurança, recomendo seguir o repositório "AWS_LinuX" para a parte da documentação anterior que tratou com mais detalhes este aspecto de criação, ou então a leitura da documentação da própria AWS: https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/working-with-security-groups.html
+Caso ainda não tenha criado o seu grupo de segurança, recomendo seguir o repositório "AWS_Linux" para a parte da documentação anterior que tratou com mais detalhes este aspecto de criação, ou então a leitura da documentação da própria AWS: https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/working-with-security-groups.html
 
 
 ### Criação da instância 
@@ -80,13 +83,18 @@ Caso ainda não tenha criado o seu grupo de segurança, recomendo seguir o repos
 -  Foi criada uma ***key pair*** com o formado .pem
 -  Na sessão de ***Network setting*** foi marcada para seleção a vpc já criada para atividade passada e uma subnet pública. Adiciona o grupo de segurança que foi adicionado recentemente a nova regra para o acesso do banco de dados 
 
-![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/c7227ab8-72f8-492c-9406-533766d58e9b)
+<div align="center">
+<img src = "https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/c7227ab8-72f8-492c-9406-533766d58e9b)">
+</div>
 
 - Manteve o armazenamento sugerido
+<div align="center">
+<img src = "https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/9eda3186-50a6-407d-a39b-b703ee306b20)">
+</div>
 
-![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/9eda3186-50a6-407d-a39b-b703ee306b20)
 
 - Adicionou o script abaixo na sessão de ***Advanced details*** (bem no final, pode rolar bastante) na parte de *user data*
+
 
 #### Script no user data
 
@@ -140,9 +148,11 @@ sudo chmod +rwx /mnt/efs/
 
 - Gerando um resumo da criação da instância desta forma:
 
-![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/818c8d2b-4a8d-4558-a7a7-463bd57dae60)
+<div align="center">
+<img src = "https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/818c8d2b-4a8d-4558-a7a7-463bd57dae60)">
+</div>
 
-- Siga para criação da isntancia apertando em ***Launch instance***
+- Siga para criação da instância cilcando em ***Launch instance***
 
 ### Criação do banco de dados MySQL com Amazon RDS
 
@@ -150,19 +160,27 @@ Para realizar esta parte, foi seguido este tutorial: https://aws.amazon.com/pt/t
 
 - Busca o serviço RDS na barra
 - Em ***chosse a database creation method***: Standard create
-- ![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/d88a1ce4-c797-4449-823933371552a944)
-  
 - ***Engine type*** : MySQL
-- ![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/14691710-e99b-4de7-8a9d-6659f637fd2f)
-  
+<div align="center">
+<img src = "https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/14691710-e99b-4de7-8a9d-6659f637fd2f)">
+</div>
+
 - ***Template***: Free tier
-- ![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/166783a3-45c1-4711-90ba-6338d56f73c7)
+<div align="center"> 
+<img src = "https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/166783a3-45c1-4711-90ba-6338d56f73c7)">
+</div>
+
   
 - Em ***Setting***: manteve o indentifier e master username e foi adicionada uma master password (é bom salvar em algum local pois será necessario para acessar depois )
-- ![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/cbf9013b-ec4e-4d59-8781-dc1623a32e21)
+<div align="center">
+<img src = "https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/cbf9013b-ec4e-4d59-8781-dc1623a32e21)">
+</div>
+
   
 - Em ***Connectivity*** identificou a VPC automaticamente, mas é bom atentar a isto ; Selecione "Yes" para Public Access e selecione o seu security group criado e ajustado anteriormente em *Existing VPC security groups*
--![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/6dc10b06-3269-40ac-bc0b-13b90bd916ea)
+<div align="center">
+<img src = "https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/6dc10b06-3269-40ac-bc0b-13b90bd916ea)">
+</div>
 
 - Desça até ***Additional configuration*** e especique um nome para o *Initial database name* pois ele será importante para fazer a conexão no futuro
 
@@ -173,7 +191,7 @@ Para realizar esta parte, foi seguido este tutorial: https://aws.amazon.com/pt/t
 
 Para realizar esta parte, foi seguido este tutorial: 
 https://aws.amazon.com/pt/tutorials/deploy-wordpress-with-amazon-rds/module-two/ 
- e para nnão ficar repetitivo, o que difere até agora é a questão da liberação do IP para todos e nesta documentação esta especificada para apenas o My IP. O que julgo ser uma solução correta e mais segura e pretendo ficar mais atenta nas próximas situações.
+ e para não ficar repetitivo, o que difere até agora é a questão da liberação do IP para todos e nesta documentação esta especificada para apenas o My IP. O que julgo ser uma solução correta e mais segura e pretendo ficar mais atenta nas próximas situações.
 
 ### Configuração do banco de dados Amazon RDS
 
@@ -185,7 +203,10 @@ https://aws.amazon.com/pt/tutorials/deploy-wordpress-with-amazon-rds/module-thre
 - Seguindo na parte de criar um usuário, ao colocar o comando *sudo yum install -y mysql* deu erro *Error: Unable to find a match: mysql*. Foi seguido este tutorial https://muleif.medium.com/how-to-install-mysql-on-amazon-linux-2023-5d39afa5bf11 até antes da parte dar start no mysql e então retornei ao comando *sudo yum install -y mysql* e deu certo e sendo assim, retorno ao tutorial da AWS
 - No comando *export MYSQL_HOST=<your-endpoint>*,  ao colocar no terminal com seu endpoint, retire os simbolos de desigualdade. 
 - No comando mysql --user=<user> --password=<password> wordpress e foi o nome *wordpress* mesmo e após este comando veio esta mensagem
-- ![image](https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/435291b3-ac11-476d-a097-673ad295b773)
+<div align="center">
+<img src = "https://github.com/katiacardoso/Atividades_Compass_DevSecOps/assets/91233884/435291b3-ac11-476d-a097-673ad295b773)">
+</div>
+
 - E seguiu como no tutorial com a parte de criação do usuário.
 
 ### Configuração do Wordpress na EC2
@@ -196,7 +217,7 @@ https://aws.amazon.com/pt/tutorials/deploy-wordpress-with-amazon-rds/module-four
 - Ao inves do comando *sudo service httpd start* coloquei o *sudo systemctl start httpd*, pois o primeiro deu a seguinte mensagem: *Redirecting to /bin/systemctl start httpd.service*
 - Verifiquei o status do apache com *sudo systemctl status httpd* e deu active
 - Nesta parte " Você pode salvar e sair do nano digitando CTRL+O seguido de CTRL+X." Foi necessário apertar enter após depois do CTRL+O
-- Deu um erro quando fui executar o comando *sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2* baixar a parte dos extras, lá na parte de implantação do Wordpress. Possivelmente por ser a versão da AMI 2023, contudo encontrei este tutorial e segui até o comando *echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php* e deu permission denied. Mas possivlemnte se mudasse para a imagem do amazon 2 seria mais tranquilo. Tão perto e tão longe.....
+- Deu um erro quando fui executar o comando *sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2* baixar a parte dos extras, lá na parte de implantação do Wordpress. Possivelmente por ser a versão da AMI 2023, contudo encontrei este tutorial e segui até o comando *echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php* e deu permission denied. Teoricamente se mudasse para a imagem do amazon 2 seria mais tranquilo. Tão perto e tão longe.....
 
 
 
